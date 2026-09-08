@@ -1,0 +1,26 @@
+{
+  "apiVersion": "apps/v1",
+  "kind": "Deployment",
+  "metadata": {"name": "synthetic-api"},
+  "spec": {
+    "template": {
+      "spec": {
+        "hostNetwork": true,
+        "automountServiceAccountToken": true,
+        "containers": [
+          {
+            "name": "api",
+            "image": "example/api:latest",
+            "securityContext": {
+              "privileged": true,
+              "allowPrivilegeEscalation": true,
+              "runAsNonRoot": false,
+              "capabilities": {"add": ["NET_ADMIN"]}
+            },
+            "resources": {"limits": {"cpu": "500m"}}
+          }
+        ]
+      }
+    }
+  }
+}
